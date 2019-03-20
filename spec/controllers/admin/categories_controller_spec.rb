@@ -15,7 +15,15 @@ describe Admin::CategoriesController do
     get :index
     assert_response :redirect, :action => 'index'
   end
-
+  
+  # Enter a new category Test here
+  it 'should create a new category' do
+      post :new, :category => {:name => "My Daily Blog", :keywords => "", :permalink => "blog", :description => "Daily Blog written here"}
+      assert_response :redirect, :action => "index"
+      expect(assigns(:category)).not_to be_nil
+      expect(flash[:notice]).to eq('Category was successfully saved.')
+  end 
+  
   describe "test_edit" do
     before(:each) do
       get :edit, :id => Factory(:category).id
@@ -61,6 +69,14 @@ describe Admin::CategoriesController do
     assert_response :redirect, :action => 'index'
 
     assert_raise(ActiveRecord::RecordNotFound) { Category.find(test_id) }
+  end
+  
+  # Edit Test here for editing existing category entry
+  it 'should edit an existing category' do
+    post :edit, :category =>{:name => "My Daily Blog", :keywords => "", :permalink => "blog link", :description => "Daily Blog written here edited"}, :id => Factory(:category).id
+    assert_response :redirect, :action => "index"
+    assert_not_nil assigns(:category)
+    expect(flash[:notice]).to eq("Category was successfully saved.")
   end
   
 end

@@ -69,4 +69,4 @@ Feature: Write Articles
 
 6 scenarios (6 passed)
 41 steps (41 passed)
-0m3.216s
+0m3.282s
